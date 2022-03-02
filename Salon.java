@@ -1,28 +1,27 @@
 package HW_M12;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Salon {
 
     private static final String MENU = """
-            1. РњРѕРґРµР»СЊ.
-            2. Р¤РѕСЂРјР°.
-            3. РњРµС…Р°РЅРёР·Рј.
-            4. РћР±РёРІРєР°.
-            5. Р’С‹С…РѕРґ""";
+            1. Модель.
+            2. Форма.
+            3. Механизм.
+            4. Обивка.
+            5. Выход""";
 
     public static void main(String[] args) {
-        Divan divan1 = new Divan("РњРѕРЅР°РєРѕ", "СѓРіР»РѕРІРѕР№", "С‚РёРє-С‚Р°Рє", false, "С‚РєР°РЅСЊ");
-        Divan divan2 = new Divan("Р”РµРЅРІРµСЂ", "СѓРіР»РѕРІРѕР№", "РІС‹РєР°С‚РЅРѕР№", false, "С‚РєР°РЅСЊ");
-        Divan divan3 = new Divan("РљР°РјРµР»РѕС‚", "РїСЂСЏРјРѕР№", "РґРµР»СЊС„РёРЅ", false, "С‚РєР°РЅСЊ");
-        Divan divan4 = new Divan("РњРѕРЅР°РєРѕ", "СѓРіР»РѕРІРѕР№", "С‚РёРє-С‚Р°Рє", false, "РєРѕР¶Р°");
-        Divan divan5 = new Divan("Р‘СЂСЋСЃСЃРµР»СЊ", "РїСЂСЏРјРѕР№", "СЃРµРґР°С„Р»РµРєСЃ", false, "С‚РєР°РЅСЊ");
-        Divan divan6 = new Divan("РњРѕРЅР°РєРѕ", "РїСЂСЏРјРѕР№", "С‚РёРє-С‚Р°Рє", false, "С‚РєР°РЅСЊ");
-        Divan divan7 = new Divan("Р‘СЂСЋСЃСЃРµР»СЊ", "СѓРіР»РѕРІРѕР№", "СЃРµРґР°С„Р»РµРєСЃ", false, "РєРѕР¶Р°");
+        Divan divan1 = new Divan("Монако", "угловой", "тик-так", false, "ткань");
+        Divan divan2 = new Divan("Денвер", "угловой", "выкатной", false, "ткань");
+        Divan divan3 = new Divan("Камелот", "прямой", "дельфин", false, "ткань");
+        Divan divan4 = new Divan("Монако", "угловой", "тик-так", false, "кожа");
+        Divan divan5 = new Divan("Брюссель", "прямой", "седафлекс", false, "ткань");
+        Divan divan6 = new Divan("Монако", "прямой", "тик-так", false, "ткань");
+        Divan divan7 = new Divan("Брюссель", "угловой", "седафлекс", false, "кожа");
         List<Divan> divanList = new ArrayList<Divan>();
+
 
         divanList.add(divan1);
         divanList.add(divan2);
@@ -32,11 +31,11 @@ public class Salon {
         divanList.add(divan6);
         divanList.add(divan7);
 
-        //РЁР°РїРєР° С‚Р°Р±Р»РёС†С‹
-        System.out.println("РњРѕРґРµР»СЊ" + "\t\t\t\t" + "Р¤РѕСЂРјР°" + "\t\t\t\t" + "РњРµС…Р°РЅРёР·Рј" + "\t\t\t\t" + "РћР±РёРІРєР°" + "\t\t\t\t" + "Р¦РµРЅР°");
+        //Шапка таблицы
+        System.out.println("Модель" + "\t\t\t\t" + "Форма" + "\t\t\t\t" + "Механизм" + "\t\t\t\t" + "Обивка" + "\t\t\t\t" + "Цена");
 
         class Print {
-            void printTable(List<Divan> divanList1) {
+            void printTable(List<Divan> divanList) {
                 for (Object divan : divanList) {
                     System.out.println(divan);
                 }
@@ -50,39 +49,39 @@ public class Salon {
 
         int choice;
         do {
-            System.out.println("Р’С‹Р±РµСЂРёС‚Рµ РІР°СЂРёР°РЅС‚ СЃРѕСЂС‚РёСЂРѕРІРєРё");
+            System.out.println("Выберите вариант сортировки");
             System.out.println(MENU);
             choice = scan.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println("РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РњРћР”Р•Р›Р");
-                    Collections.sort(divanList, new DivanModelComp());
-                    print.printTable(divanList);
+                    System.out.println("Сортировка по МОДЕЛИ");
+                    divanList.stream().sorted(Comparator.comparing(Divan::getModel))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 2:
-                    System.out.println("РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ Р¤РћР РњР•");
-                    Collections.sort(divanList, new DivanShapeComp());
-                    print.printTable(divanList);
+                    System.out.println("Сортировка по ФОРМЕ");
+                    divanList.stream().sorted(Comparator.comparing(Divan::getShape))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 3:
-                    System.out.println("РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РњР•РҐРђРќРР—РњРЈ");
-                    Collections.sort(divanList, new DivanMechanismComp());
-                    print.printTable(divanList);
+                    System.out.println("Сортировка по МЕХАНИЗМУ");
+                    divanList.stream().sorted(Comparator.comparing(Divan::getMechanism))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 4:
-                    System.out.println("РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РўРРџРЈ РћР‘РР’РљР");
-                    Collections.sort(divanList, new DivanModelComp());
-                    print.printTable(divanList);
+                    System.out.println("Сортировка по ТИПУ ОБИВКИ");
+                    divanList.stream().sorted(Comparator.comparing(Divan::getFabricCategory))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 5:
                     break;
                 default:
-                    System.out.println("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ");
+                    System.out.println("Некорректный ввод");
             }
-        } while (choice !=5);
+        } while (choice != 5);
     }
 }
