@@ -1,9 +1,7 @@
 package HW_M12;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Salon {
 
@@ -37,7 +35,7 @@ public class Salon {
         System.out.println("Модель" + "\t\t\t\t" + "Форма" + "\t\t\t\t" + "Механизм" + "\t\t\t\t" + "Обивка" + "\t\t\t\t" + "Цена");
 
         class Print {
-            void printTable(List<Divan> divanList1) {
+            void printTable(List<Divan> divanList) {
                 for (Object divan : divanList) {
                     System.out.println(divan);
                 }
@@ -57,26 +55,26 @@ public class Salon {
             switch (choice) {
                 case 1:
                     System.out.println("Сортировка по МОДЕЛИ");
-                    Collections.sort(divanList, new DivanModelComp());
-                    print.printTable(divanList);
+                    divanList.stream().sorted(Comparator.comparing(Divan::getModel))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 2:
                     System.out.println("Сортировка по ФОРМЕ");
-                    Collections.sort(divanList, new DivanShapeComp());
-                    print.printTable(divanList);
+                    divanList.stream().sorted(Comparator.comparing(Divan::getShape))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 3:
                     System.out.println("Сортировка по МЕХАНИЗМУ");
-                    Collections.sort(divanList, new DivanMechanismComp());
-                    print.printTable(divanList);
+                    divanList.stream().sorted(Comparator.comparing(Divan::getMechanism))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 4:
                     System.out.println("Сортировка по ТИПУ ОБИВКИ");
-                    Collections.sort(divanList, new DivanModelComp());
-                    print.printTable(divanList);
+                    divanList.stream().sorted(Comparator.comparing(Divan::getFabricCategory))
+                            .forEach(System.out::println);
                     System.out.println();
                     break;
                 case 5:
@@ -84,6 +82,6 @@ public class Salon {
                 default:
                     System.out.println("Некорректный ввод");
             }
-        } while (choice !=5);
+        } while (choice != 5);
     }
 }
